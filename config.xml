@@ -14,6 +14,8 @@
   <preference name="AZME_ACTION_URL" default="null"/>
   <preference name="AZME_ENABLE_PLUGIN_LOG" default="true"/>
   <preference name="AZME_ENABLE_NATIVE_LOG" default="true"/>
+  <preference name="AZME_ANDROID_CONNECTION_STRING" default="Endpoint=azMEPerceptio.device.mobileengagement.windows.net;SdkKey=425bd0b984dbd045d3027d31dd56be81;AppId=cua000451" />
+
   <!-- android -->
   <platform name="android">
       <preference name="AZME_ANDROID_GOOGLE_PROJECT_NUMBER" default="null"/>
@@ -37,6 +39,6 @@
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
   <plugin name="cordova-plugin-ms-azure-mobile-engagement" />
-  
+
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
 </widget>
