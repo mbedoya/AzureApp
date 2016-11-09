@@ -20,6 +20,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    alert("about to engage");
+    Engagement.startActivity("myPage",{});
+    alert("engage done");
   });
 })
 
