@@ -38,7 +38,11 @@
   <plugin name="cordova-plugin-whitelist" spec="~1.3.0"/>
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
-  <plugin name="cordova-plugin-ms-azure-mobile-engagement" />
+  <plugin name="cordova-plugin-ms-azure-mobile-engagement" >
+    <params>
+      <param name="AZME_ANDROID_CONNECTION_STRING" value="Endpoint=azMEPerceptio.device.mobileengagement.windows.net;SdkKey=425bd0b984dbd045d3027d31dd56be81;AppId=cua000451" />
+      </params> 
+  </plugin>
 
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
 </widget>
