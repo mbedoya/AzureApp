@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
 
       alert("about to engage");
-      if(Engagement){
+      if(typeof (Engagement) !== "undefined"){
         Engagement.startActivity("myPage", {});
       alert("engage done");
       }else{
@@ -33,6 +33,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // Register for Push Notifications. Requires that phonegap-plugin-push be installed.
       var pushRegistration = null;
       function registerForPushNotifications() {
+
+        alert("register, before push");
 
         if(!PushNotification){
           return;
