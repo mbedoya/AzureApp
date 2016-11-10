@@ -56,4 +56,6 @@
   -->
 
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
+
+  <preference name="android-build-tool" value="gradle" /> 
 </widget>
