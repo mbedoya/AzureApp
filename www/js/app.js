@@ -59,6 +59,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           var platform = device.platform;
           // Get the handle returned during registration.
           var handle = data.registrationId;
+
+          alert(handle);
+
           // Set the device-specific message template.
           if (platform == 'android' || platform == 'Android') {
             // Register for GCM notifications.
