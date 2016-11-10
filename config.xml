@@ -45,11 +45,13 @@
       <param name="SENDER_ID" value="275683696350" />
       </params>
   </plugin>
+  <!-- 
   <plugin name="cordova-plugin-ms-azure-mobile-engagement" >
     <params>
       <param name="AZME_ANDROID_CONNECTION_STRING" value="Endpoint=azMEPerceptio.device.mobileengagement.windows.net;SdkKey=425bd0b984dbd045d3027d31dd56be81;AppId=cua000451" />
       </params> 
   </plugin>
+  -->
 
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
 </widget>
