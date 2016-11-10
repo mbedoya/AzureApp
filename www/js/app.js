@@ -7,83 +7,149 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
 
-    alert("about to engage");
-    Engagement.startActivity("myPage",{});
-    alert("engage done");
-  });
-})
+      alert("about to engage");
+      if(Engagement){
+        Engagement.startActivity("myPage", {});
+      alert("engage done");
+      }else{
+        console.log("engage not available");
+      }
+      
 
-.config(function($stateProvider, $urlRouterProvider) {
+      // Register for Push Notifications. Requires that phonegap-plugin-push be installed.
+      var pushRegistration = null;
+      function registerForPushNotifications() {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+        if(!PushNotification){
+          return;
+        }
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
+        alert("about to init push");
+
+        pushRegistration = PushNotification.init({
+          android: { senderID: '275683696350' },
+          ios: { alert: 'true', badge: 'true', sound: 'true' },
+          wns: {}
+        });
+
+        alert("push init done");
+
+        // Handle the registration event.
+        pushRegistration.on('registration', function (data) {
+
+          alert("registered");
+
+          // Get the native platform of the device.
+          var platform = device.platform;
+          // Get the handle returned during registration.
+          var handle = data.registrationId;
+          // Set the device-specific message template.
+          if (platform == 'android' || platform == 'Android') {
+            // Register for GCM notifications.
+            client.push.register('gcm', handle, {
+              mytemplate: { body: { data: { message: "{$(messageParam)}" } } }
+            });
+          } else if (device.platform === 'iOS') {
+            // Register for notifications.            
+            client.push.register('apns', handle, {
+              mytemplate: { body: { aps: { alert: "{$(messageParam)}" } } }
+            });
+          } else if (device.platform === 'windows') {
+            // Register for WNS notifications.
+            client.push.register('wns', handle, {
+              myTemplate: {
+                body: '<toast><visual><binding template="ToastText01"><text id="1">$(messageParam)</text></binding></visual></toast>',
+                headers: { 'X-WNS-Type': 'wns/toast' }
+              }
+            });
+          }
+        });
+
+        pushRegistration.on('notification', function (data, d2) {
+          alert('Push Received: ' + data.message);
+        });
+
+        pushRegistration.on('error', function(){
+          alert("error on notification");
+        });
+      }
+
+      registerForPushNotifications();
+
+    });
   })
 
-  // Each tab has its own nav history stack:
+  .config(function ($stateProvider, $urlRouterProvider) {
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
+    $stateProvider
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+      // setup an abstract state for the tabs directive
+      .state('tab', {
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
+      })
+
+      // Each tab has its own nav history stack:
+
+      .state('tab.dash', {
+        url: '/dash',
+        views: {
+          'tab-dash': {
+            templateUrl: 'templates/tab-dash.html',
+            controller: 'DashCtrl'
+          }
         }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
+      })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
+      .state('tab.chats', {
+        url: '/chats',
+        views: {
+          'tab-chats': {
+            templateUrl: 'templates/tab-chats.html',
+            controller: 'ChatsCtrl'
+          }
+        }
+      })
+      .state('tab.chat-detail', {
+        url: '/chats/:chatId',
+        views: {
+          'tab-chats': {
+            templateUrl: 'templates/chat-detail.html',
+            controller: 'ChatDetailCtrl'
+          }
+        }
+      })
+
+      .state('tab.account', {
+        url: '/account',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/tab-account.html',
+            controller: 'AccountCtrl'
+          }
+        }
+      });
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/tab/dash');
+
   });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
-
-});
