@@ -22,13 +22,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
 
       alert("about to engage");
-      if(typeof (Engagement) !== "undefined"){
+      if (typeof (Engagement) !== "undefined") {
         Engagement.startActivity("myPage", {});
-      alert("engage done");
-      }else{
+        alert("engage done");
+      } else {
         console.log("engage not available");
       }
-      
+
 
       // Register for Push Notifications. Requires that phonegap-plugin-push be installed.
       var pushRegistration = null;
@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         alert("register, before push");
 
-        if(!PushNotification){
+        if (!PushNotification) {
           return;
         }
 
@@ -81,11 +81,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
         });
 
+        pushRegistration.subscribe('perceptio-topic', function () {
+          alert('success suscription');
+        }, function (e) {
+          alert('error suscription:');
+          //console.log(e);
+        });
+
         pushRegistration.on('notification', function (data, d2) {
           alert('Push Received: ' + data.message);
         });
 
-        pushRegistration.on('error', function(){
+        pushRegistration.on('error', function () {
           alert("error on notification");
         });
       }
