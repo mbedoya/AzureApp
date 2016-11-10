@@ -39,6 +39,7 @@
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
   <plugin name="phonegap-plugin-push" >
+    <param name="SENDER_ID" value="275683696350" />
     <variable name="SENDER_ID" value="275683696350" />
     <params>
       <param name="SENDER_ID" value="275683696350" />
