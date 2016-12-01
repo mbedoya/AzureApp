@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         alert("about to init push");
 
         pushRegistration = PushNotification.init({
-          android: { senderID: '275683696350' },
+          android: { senderID: '205462622475' },
           ios: { alert: 'true', badge: 'true', sound: 'true' },
           wns: {}
         });
@@ -83,6 +83,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
               }
             });
           }
+
+          var jqxhr = $.ajax({
+            url: "https://argosstore-dev.doctus.com.co/Api/NotificationApi/Service/RegisterDevice",
+            data: JSON.stringify(
+              {
+                "ApplicationID": "AIzaSyAVjwtQazTlXl-KWHgdjcWoWiE55y78OIQ",
+                "Handle": handle,
+                "Platform": "Android",
+                "Tags": [],
+                "Environment": false
+              }),
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json"
+          })
+            .done(function (data) {
+              alert("done register");
+            })
+            .fail(function () {
+              alert("error register");
+            })
+            ;
         });
 
         pushRegistration.subscribe('perceptio-topic', function () {

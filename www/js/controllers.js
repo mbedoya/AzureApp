@@ -67,7 +67,7 @@ angular.module('starter.controllers', [])
       orderArray.push({ id: 3, val: "-XY", color: "gray" });
       orderArray.push({ id: 4, val: "-MX", color: "yellow" });
 
-      orderArray = $scope.agruparVectorPorColumna(orderArray, "color");
+      //orderArray = $scope.agruparVectorPorColumna(orderArray, "color");
 
       // get handle on div
       var container = document.getElementById('container');
