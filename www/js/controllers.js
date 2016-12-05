@@ -1,6 +1,62 @@
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', function ($scope, $rootScope) { })
+  .controller('DashCtrl', function ($scope, $rootScope) {
+
+    $scope.testRegistration = function (handle) {
+
+      //Se valida si el dispositivo ya se ha registrado en Azure (Servicio de doctus)
+      if (!localStorage["argos_registroNotificaciones"]) {
+
+        console.log("about to register");
+
+        var urlServicioRegistro = "https://argosstore-dev.doctus.com.co/Api/NotificationApi/Service/RegisterDevice";
+        var applicationID = "415b8b7b-ace4-48db-ac88-e30630a897fd";
+        var usuario = "aareiza";
+
+        var objetoEnvio = {
+          "ApplicationID": applicationID,
+          "Handle": handle,
+          "Platform": "Android",
+          "Tags": [{ usuario: usuario }],
+          "Environment": false
+        };
+
+        console.log(objetoEnvio);
+
+        var jqxhr = $.ajax({
+          url: urlServicioRegistro,
+          data: JSON.stringify(objetoEnvio),
+          dataType: "json",
+          type: "POST",
+          contentType: "application/json"
+        })
+          .done(function (data) {
+
+            console.log(data);
+
+            if (!data.Data) {
+              console.log("No se ha podido registrar el dispositivo");
+              if(data.Header && data.Header.Message){
+                console.log(data.Header.Message);
+              }
+            } else {
+              console.log("Dispositivo registrado");
+              localStorage["argos_registroNotificaciones"] = handle;
+            }
+
+          })
+          .fail(function () {
+            alert("error register");
+          })
+          ;
+
+      } else {
+        console.log("Registro ya realizado");
+      }
+
+    }
+
+  })
 
   .controller('ChatsCtrl', function ($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called
