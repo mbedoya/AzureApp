@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         alert("about to init push");
 
         pushRegistration = PushNotification.init({
-          android: { senderID: '531375899368' },
+          android: { senderID: '275683696350' },
           ios: { alert: 'true', badge: 'true', sound: 'true' },
           wns: {}
         });
